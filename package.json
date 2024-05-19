@@ -1,0 +1,53 @@
+{
+  "name": "mediator-r",
+  "version": "1.0.0",
+  "description": "Library for CQRS/CQS. Implementation of mediator analogue MediatR in .NET",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "directories": {
+    "example": "example"
+  },
+  "devDependencies": {
+    "@ignis-web/cqrs-cli": "0.0.8",
+    "@types/jest": "29.5.3",
+    "@types/node": "20.5.1",
+    "@typescript-eslint/eslint-plugin": "7.0.2",
+    "@typescript-eslint/parser": "7.0.2",
+    "eslint": "8.56.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-new-with-error": "4.0.0",
+    "eslint-plugin-no-unsafe-regex": "1.0.0",
+    "eslint-plugin-prettier": "5.1.3",
+    "eslint-plugin-promise": "6.1.1",
+    "eslint-plugin-unused-imports": "3.2.0",
+    "prettier": "3.2.5",
+    "fastify": "4.21.0",
+    "madge": "6.1.0",
+    "nodemon": "3.0.1",
+    "ts-node": "10.8.0",
+    "typescript": "5.1.6",
+    "zod": "3.22.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "make build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dm-kamaev/mediator-r.git"
+  },
+  "keywords": [
+    "mediator-r",
+    "mediator-R",
+    "mediatorR",
+    "cqrs",
+    "cqs",
+    "command",
+    "query",
+    "bus",
+    "message",
+    "ddd"
+  ],
+  "author": "dm-kamaev@rambler.ru",
+  "license": "ISC"
+}
