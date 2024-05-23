@@ -42,14 +42,12 @@ const schema = {
   },
 };
 
+export type Mediator = MediatorR<typeof schema>;
 export type Provider = CreateProvider<typeof schema>;
-export let mediatorR: MediatorR<typeof schema>;
-export let provider: Provider;
+export const mediatorR: Mediator = new MediatorR(schema);
+export const provider: Provider = mediatorR.provider;
 
-mediatorR = new MediatorR(schema);
-provider = mediatorR.provider;
-
-void async function () {
+void (async function (mediatorR: Mediator, provider: Provider) {
   const action = mediatorR.action.order.getById(1);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const result2 = await mediatorR.exec(action);
@@ -61,4 +59,4 @@ void async function () {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const order = await provider.order.getById(orderId);
   //     ^?
-};
+})(mediatorR, provider);

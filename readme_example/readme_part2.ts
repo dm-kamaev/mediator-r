@@ -1,4 +1,4 @@
-import MediatorR, { ICommand, IQuery, ICommandHandler, IQueryHandler } from '../index';
+import { ICommand } from '../index';
 
 interface ICreateCommand extends ICommand<'user.create', { id: number; role: string[] }> { };
 
