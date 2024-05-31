@@ -1,4 +1,4 @@
-import { IQuery } from '../../../../index';
+import { IQuery } from '../../../../../src';
 
 import { z } from 'zod';
 import dbOrder from '../db/dbOrder';

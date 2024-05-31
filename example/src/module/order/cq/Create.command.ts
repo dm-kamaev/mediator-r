@@ -1,4 +1,4 @@
-import { ICommand } from '../../../../index';
+import { ICommand } from '../../../../../src';
 
 import { z } from 'zod';
 import type { Provider } from '../../../cqrs';

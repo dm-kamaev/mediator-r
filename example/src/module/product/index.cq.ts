@@ -4,13 +4,12 @@ import { GetByIdsHandler } from './cq/GetByIds.handler';
 import { ToBookCommand } from './cq/ToBook.command';
 import { ToBookHandler } from './cq/ToBook.handler';
 
-export default {
-  getByIds: {
-    action: GetByIdsQuery,
-    handler: GetByIdsHandler,
-  },
-  toBook: {
-    action: ToBookCommand,
-    handler: ToBookHandler,
-  },
+export const getByIds = {
+  action: GetByIdsQuery,
+  handler: GetByIdsHandler,
+};
+
+export const toBook = {
+  action: ToBookCommand,
+  handler: ToBookHandler,
 };

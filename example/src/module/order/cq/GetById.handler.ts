@@ -1,4 +1,4 @@
-import { IQueryHandler } from '../../../../index';
+import { IQueryHandler } from '../../../../../src';
 import type { Provider } from '../../../cqrs';
 import dbOrder from '../db/dbOrder';
 import type { GetByIdQuery } from './GetById.query';

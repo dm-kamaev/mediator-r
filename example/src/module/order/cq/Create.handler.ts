@@ -1,4 +1,4 @@
-import { ICommandHandler } from '../../../../index';
+import { ICommandHandler } from '../../../../../src';
 import type { Provider } from '../../../cqrs';
 import dbOrder from '../db/dbOrder';
 import type { CreateCommand } from './Create.command';

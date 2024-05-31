@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 
-import { provider } from './cqrs';
+import { provider } from '../cqrs';
 
 const app = Fastify();
 

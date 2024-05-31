@@ -1,4 +1,4 @@
-import { ICommand } from '../index';
+import { ICommand } from '../src/index';
 
 interface ICreateCommand extends ICommand<'user.create', { id: number; role: string[] }> { };
 

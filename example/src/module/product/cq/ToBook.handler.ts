@@ -1,4 +1,4 @@
-import { ICommandHandler } from '../../../../index';
+import { ICommandHandler } from '../../../../../src';
 import type { ToBookCommand } from './ToBook.command';
 
 import dbProduct from '../db/dbProduct';

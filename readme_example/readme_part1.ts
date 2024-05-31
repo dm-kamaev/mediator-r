@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
 
-import MediatorR, { ICommand, IQuery, ICommandHandler, IQueryHandler, CreateProvider } from '../index';
+import MediatorR, { ICommand, IQuery, ICommandHandler, IQueryHandler, CreateProvider } from '../src/index';
 
 // first argument is unique indeteficator of command, second is payload data
 class CreateCommand implements ICommand<'user.create', { id: number; name: string }> {

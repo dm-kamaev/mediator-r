@@ -1,4 +1,4 @@
-import { IQueryHandler } from '../../../../index';
+import { IQueryHandler } from '../../../../../src';
 import dbProduct from '../db/dbProduct';
 
 import type { GetByIdsQuery } from './GetByIds.query';

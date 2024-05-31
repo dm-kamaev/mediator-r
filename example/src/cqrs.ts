@@ -1,12 +1,12 @@
 /* eslint-disable prefer-const */
 /* eslint-disable no-use-before-define */
-import MediatorR, { CreateProvider } from '../index';
+import MediatorR, { CreateProvider } from '../../src/index';
 
-import product from './module/product/index.cq';
-import * as Product from './module/product/index.cq.type';
+import * as product from './module/product/index.cq';
+import * as Product from './module/product/index.type.cq';
 
-import order from './module/order/index.cq';
-import * as Order from './module/order/index.cq.type';
+import * as order from './module/order/index.cq';
+import * as Order from './module/order/index.type.cq';
 
 const schema = {
   product: {

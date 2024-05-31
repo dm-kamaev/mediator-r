@@ -1,4 +1,4 @@
-import { ICommand } from '../../../../index';
+import { ICommand } from '../../../../../src';
 
 import { z } from 'zod';
 import dbProduct from '../db/dbProduct';

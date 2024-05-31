@@ -1,5 +1,5 @@
 
-import MediatorR, { ICommand, IQuery, ICommandHandler, IQueryHandler, CreateProvider } from '../index';
+import MediatorR, { ICommand, IQuery, ICommandHandler, IQueryHandler, CreateProvider } from '../src/index';
 
 class CreateCommand implements ICommand<'user.create', { id: number; name: string }> {
   readonly __tag = 'command:user.create';
