@@ -546,11 +546,11 @@ function create_handler(
 }
 
 program
-  .description('CLI for generate Command/Query/Handler classes by type file')
+  .description('CLI for generate classes Command/Query/Handler')
   .argument('<name>')
   .requiredOption('-f, --folder <path>', 'path of folder, for example "feature/user/"')
   .requiredOption('-n, --name <name>', 'command/query name, for example, "Create", "GetById"')
-  .option('--snake-case', 'format naming of Command/Query/Handler')
+  .option('--snake-case', 'format naming of Command/Query/Handler, by default is camel case')
   .option('-s, --subfolder <path>', 'folder of Command/Query/Handler, by default is "cq"', 'cq')
   .option('-i, --index <path>', 'name of index file with Command/Query/Handler, by default is "index.cq.ts"', 'index.cq.ts')
   .option(

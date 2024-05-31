@@ -1,12 +1,12 @@
 {
   "name": "mediator-r",
-  "version": "1.0.2",
-  "description": "Library for CQRS/CQS. Implementation of mediator analogue MediatR in .NET",
+  "version": "1.0.3",
+  "description": "Library for CQRS/CQS. This library inspiration of MediatR from .NET",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "files": ["dist"],
   "bin": {
-    "miderator-r": "./dist/cli.js"
+    "mediator-r": "./dist/cli.js"
   },
   "dependencies": {
     "commander": "10.0.0",

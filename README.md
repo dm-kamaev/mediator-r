@@ -2,7 +2,8 @@
 
 [![Actions Status](https://github.com/dm-kamaev/mediator-r/workflows/Build/badge.svg)](https://github.com/dm-kamaev/mediator-r/actions)
 
-Library for realization of CQS/CQRS in your applicaton.
+Library for realization of CQS/CQRS in your applicaton. This library inspiration of MediatR from .NET
+
 
 ```sh
 npm i mediator-r -S
@@ -17,7 +18,7 @@ npm i mediator-r -S
 - [Middlewares](#middlewares)
 - [After exec](#after-exec)
 - [Invoke command/query from another command/query](#invoke-commandquery-from-another-commandquery)
-<!-- - [Code Generation](#code-generation) -->
+- [Code Generation](#code-generation)
 
 ## Example
 ```ts
@@ -295,7 +296,9 @@ class CreateHandler implements ICommandHandler<CreateCommand> {
 It's asyncronous and called after `exec`.
 
 ## Invoke command/query from another command/query
-If you want to pass bus of command and query as dependencies (DI) instead of direct import in your codebase, you can create neccessary types:
+If you want invoke command/query from another command/query. You can pass command/query as dependencies (DI) instead of direct import. The type `Provider` help you get neccessary type of command/query for injection. The command/query is injected at the moment of initialization of the mediator.
+
+For example:
 ```ts
 import MediatorR, { ICommand, IQuery, ICommandHandler, IQueryHandler, CreateProvider } from 'mediator-r';
 
@@ -311,14 +314,14 @@ class CreateCommand implements ICommand<'user.create', { id: number; name: strin
   }
 }
 
-
 class CreateHandler implements ICommandHandler<CreateCommand> {
   public readonly __tag = 'command:user.create';
 
+  // Taking query getById as parameter
   constructor(private readonly providerUserModule: { getById: Provider['user']['getById'] }) {}
 
   async exec({ payload: user }: CreateCommand) {
-
+    // Invoke query
     if (await this.providerUserModule.getById(user.id)) {
       throw new Error(`User with id = ${user.id} already exist`);
     }
@@ -328,15 +331,12 @@ class CreateHandler implements ICommandHandler<CreateCommand> {
       name: user.name,
     });
   }
-
 }
 
 class GetByIdQuery implements IQuery<'user.get-by-id', number> {
   readonly __tag = 'query:user.get-by-id';
-
-  constructor(public payload: number) { }
+  constructor(public payload: number) {}
 }
-
 
 class GetByIdHandler implements IQueryHandler<GetByIdQuery, { id: number, name: string }> {
   readonly __tag = 'query:user.get-by-id';
@@ -353,7 +353,10 @@ const schema = {
   user: {
     create: {
       action: (id: CreateCommand['payload']) => new CreateCommand(id),
-      handler: () => new CreateHandler({ getById: provider.user.getById }),
+      handler: () =>
+        // Passing query getById as parameter
+        new CreateHandler({ getById: provider.user.getById })
+      ,
       exec: (userData: CreateCommand['payload']) => mediatorR.exec(mediatorR.action.user.create(userData))
     },
     getById: {
@@ -363,70 +366,44 @@ const schema = {
     },
   }
 };
-
-
-export type Mediator = MediatorR<typeof schema>;
-export type Provider = CreateProvider<typeof schema>;
-export const mediatorR: Mediator = new MediatorR(schema);
-export const provider: Provider = mediatorR.provider;
-
-
-void (async function (mediatorR: Mediator, provider: Provider) {
-  const userId = 123;
-
-  // Manual call
-  {
-    await mediatorR.exec(mediatorR.action.user.create({ id: userId, name: 'John' }));
-    // { id: 123 }
-    const user = await mediatorR.exec(mediatorR.action.user.getById(userId));
-    // { id: 123, name: 'John' }
-  }
-
-  // Call via provider
-  {
-    await provider.user.create({ id: userId, name: 'John' });
-    // { id: 123 }
-    const user = await provider.user.getById(userId);
-    // { id: 123, name: 'John' }
-  }
-})(mediatorR, provider);
 ```
 
-<!-- ### Code generation
-Package `@ignis-web/cqrs-cli` helps to create bolerplate code for command and query from declared types.
-
-Install:
-```sh
-npm i @ignis-web/cqrs-cli -D
-```
-
-Creating file with types for command and query:
-```ts
-# example/module/user/type.ts
-
-import { ICommand, IQuery, ICommandHandler, IQueryHandler } from '@ignis-web/cqrs';
-
-export interface ICreateCommand extends ICommand<'user.create', { id: number; name: string }> { };
-export interface ICreateHandler extends ICommandHandler<ICreateCommand> { };
-
-export interface IGetByIdQuery extends IQuery<'user.get-by-id', number> { };
-export interface IGetByIdHandler extends IQueryHandler<IGetByIdQuery, { id: number, name: string }> { };
-```
+## Code generation
+The package comes with command line utility `mediator-r` helps to create bolerplate code for command/query and his handler. Also, it adds statements for export of class and his type in necessary index files.
 
 Generate code:
 ```sh
-npx create-cq -m example/module/user
+# Create command
+npx mediator-r create-command  -f module/user/ -n Create
+# Create query
+npx mediator-r create-query  -f module/user/ -n GetById
 
 Output:
-example/module/user/
+module/user
 ├── cq
 │   ├── Create.command.ts
 │   ├── Create.handler.ts
 │   ├── GetById.handler.ts
 │   └── GetById.query.ts
-├── index.ts
-└── type.ts
+├── index.cq.ts # export command/query
+└── index.type.cq.ts # export type of command/query/handler
 ```
 
-[More details](https://www.npmjs.com/package/@ignis-web/cqrs-cli)
- -->
+### Options
+```sh
+$ npx mediator-r --help
+Usage: mediator-r [options] <name>
+
+CLI for generate classes Command/Query/Handler
+
+Options:
+  -f, --folder <path>      path of folder, for example "feature/user/"
+  -n, --name <name>        command/query name, for example, "Create", "GetById"
+  --snake-case             format naming of Command/Query/Handler
+  -s, --subfolder <path>   folder of Command/Query/Handler, by default is "cq" (default: "cq")
+  -i, --index <path>       name of index file with Command/Query/Handler, by default is "index.cq.ts" (default: "index.cq.ts")
+  -t, --index-type <path>  name of index file with type of Command/Query/Handler, by default is "index.type.cq.ts" (default: "index.type.cq.ts")
+  -V, --version            output the version number
+  -h, --help               display help for command
+```
+
